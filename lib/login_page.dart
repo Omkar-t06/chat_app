@@ -1,10 +1,11 @@
 import 'package:chatting_app/Widgets/login_textfields.dart';
 import 'package:chatting_app/utils/spaces.dart';
-import 'package:chatting_app/utils/textfield_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media_buttons/social_media_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatelessWidget {
-  LoginPage({Key? key}) : super(key: key);
+  LoginPage({super.key});
 
   final _formKey = GlobalKey<FormState>();
 
@@ -26,6 +27,9 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Uri gitUrl = Uri.parse('https://github.com/Omkar-t06');
+    final Uri linkedInUrl =
+        Uri.parse('https://www.linkedin.com/in/omkar-tavva-483451256');
     final theme = Theme.of(context);
     final elevatedButtonStyle = ElevatedButton.styleFrom(
       backgroundColor: theme.primaryColor,
@@ -59,8 +63,8 @@ class LoginPage extends StatelessWidget {
                     fontSize: 20,
                     color: Colors.blueGrey),
               ),
-              Image.network(
-                'https://3009709.youcanlearnit.net/Alien_LIL_131338.png',
+              Image.asset(
+                "assets/images/banner_image.png",
                 height: 150,
               ),
               Form(
@@ -90,9 +94,7 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 8,
-              ),
+              verticalSpace(8),
               ElevatedButton(
                 onPressed: () {
                   loginUser(context);
@@ -107,16 +109,27 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () {
-                  //TODO: Navigate to Browse Page
-                  print("Clicked");
+                onTap: () async {
+                  if (!await launchUrl(gitUrl)) {
+                    throw Exception('Could not launch $gitUrl');
+                  }
                 },
                 child: const Column(
                   children: [
-                    Text("Find us on"),
-                    Text("Facebook, Twitter, Instagram"),
+                    Text("Find us on:"),
                   ],
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SocialMediaButton.github(
+                    url: gitUrl.toString(),
+                  ),
+                  SocialMediaButton.linkedin(
+                    url: linkedInUrl.toString(),
+                  ),
+                ],
               ),
             ],
           ),
