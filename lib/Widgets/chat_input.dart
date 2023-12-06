@@ -31,7 +31,7 @@ class ChatInput extends StatelessWidget {
               controller: messageController,
               style: const TextStyle(color: Colors.white),
               keyboardType: TextInputType.multiline,
-              maxLength: 5,
+              maxLines: 5,
               minLines: 1,
               textCapitalization: TextCapitalization.sentences,
               decoration: const InputDecoration(

@@ -1,3 +1,6 @@
+import 'package:chatting_app/Widgets/login_textfields.dart';
+import 'package:chatting_app/utils/spaces.dart';
+import 'package:chatting_app/utils/textfield_styles.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -64,7 +67,9 @@ class LoginPage extends StatelessWidget {
                 key: _formKey,
                 child: Column(
                   children: [
-                    TextFormField(
+                    LoginTextField(
+                      controller: userNameController,
+                      hintText: 'Enter your email',
                       validator: (value) {
                         if (value != null &&
                             value.isNotEmpty &&
@@ -75,24 +80,12 @@ class LoginPage extends StatelessWidget {
                         }
                         return null;
                       },
-                      controller: userNameController,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter your email',
-                        hintStyle: TextStyle(color: Colors.blueGrey),
-                        border: OutlineInputBorder(),
-                      ),
                     ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    TextFormField(
-                      controller: passwordController,
+                    verticalSpace(8),
+                    LoginTextField(
                       obscureText: true,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter your password',
-                        hintStyle: TextStyle(color: Colors.blueGrey),
-                        border: OutlineInputBorder(),
-                      ),
+                      controller: passwordController,
+                      hintText: "Enter your password",
                     ),
                   ],
                 ),
