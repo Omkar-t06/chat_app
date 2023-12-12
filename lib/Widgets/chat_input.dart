@@ -1,12 +1,25 @@
+import 'package:chatting_app/Models/chat_msg_entities.dart';
 import 'package:flutter/material.dart';
 
 class ChatInput extends StatelessWidget {
-  ChatInput({super.key});
+  final Function(ChatMessageEntity) onSubmit;
 
-  final messageController = TextEditingController();
+  ChatInput({super.key, required this.onSubmit});
+
+  final chatMessageController = TextEditingController();
 
   void onSendButtonPressed() {
-    print(messageController.text);
+    print('ChatMessage: ${chatMessageController.text}');
+    //TODO: Add this new message to the default list
+
+    final newChatMessage = ChatMessageEntity(
+      text: chatMessageController.text,
+      id: "244",
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+      author: Author(userName: 'poojab26'),
+    );
+
+    onSubmit(newChatMessage);
   }
 
   @override
@@ -27,20 +40,18 @@ class ChatInput extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: TextField(
-              controller: messageController,
-              style: const TextStyle(color: Colors.white),
-              keyboardType: TextInputType.multiline,
-              maxLines: 5,
-              minLines: 1,
-              textCapitalization: TextCapitalization.sentences,
-              decoration: const InputDecoration(
-                hintText: "Type a message",
+              child: TextField(
+            keyboardType: TextInputType.multiline,
+            maxLines: 5,
+            minLines: 1,
+            controller: chatMessageController,
+            textCapitalization: TextCapitalization.sentences,
+            style: const TextStyle(color: Colors.white),
+            decoration: const InputDecoration(
+                hintText: "Type your message",
                 hintStyle: TextStyle(color: Colors.blueGrey),
-                border: InputBorder.none,
-              ),
-            ),
-          ),
+                border: InputBorder.none),
+          )),
           IconButton(
             onPressed: onSendButtonPressed,
             icon: const Icon(

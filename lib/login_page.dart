@@ -67,7 +67,6 @@ class LoginPage extends StatelessWidget {
               Image.asset(
                 "assets/images/banner_image.png",
                 height: 150,
-                width: 300,
               ),
               Form(
                 key: _formKey,
