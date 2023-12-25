@@ -14,14 +14,13 @@ class ImageRepository {
       if (response.statusCode == 200) {
         final List<dynamic> decodedList = jsonDecode(response.body) as List;
 
-        final List<PixelfordImage> _imageList = decodedList.map((listItem) {
+        final List<PixelfordImage> imageList = decodedList.map((listItem) {
           return PixelfordImage.fromJson(listItem);
         }).toList();
 
-        print(_imageList[0].urlFullSize);
-        return _imageList;
+        print(imageList[0].urlFullSize);
+        return imageList;
       } else {
-        //TODO: Handle specific exceptions
         throw Exception('API not successful!');
       }
     } on SocketException {

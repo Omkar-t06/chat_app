@@ -1,24 +1,26 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:chatting_app/Widgets/login_textfields.dart';
+import 'package:chatting_app/services/auth_service.dart';
 import 'package:chatting_app/utils/spaces.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:social_media_buttons/social_media_buttons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
-  final _formKey = GlobalKey<FormState>();
+  final _formkey = GlobalKey<FormState>();
 
-  void loginUser(context) {
-    if (_formKey.currentState != null && _formKey.currentState!.validate()) {
-      print(userNameController.text);
-      print(passwordController.text);
+  Future<void> loginUser(BuildContext context) async {
+    if (_formkey.currentState != null && _formkey.currentState!.validate()) {
+      await context.read<AuthService>().loginUser(userNameController.text);
 
       Navigator.pushReplacementNamed(context, '/chat',
           arguments: userNameController.text);
-      print("Login User");
     } else {
-      print("Invalid");
+      print('not successful!');
     }
   }
 
@@ -42,7 +44,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -60,7 +62,7 @@ class LoginPage extends StatelessWidget {
                 'Welcome back! \n You\'ve been missed!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w500,
                     fontSize: 20,
                     color: Colors.blueGrey),
               ),
@@ -69,12 +71,11 @@ class LoginPage extends StatelessWidget {
                 height: 150,
               ),
               Form(
-                key: _formKey,
+                key: _formkey,
                 child: Column(
                   children: [
                     LoginTextField(
-                      controller: userNameController,
-                      hintText: 'Enter your email',
+                      hintText: "Enter your username",
                       validator: (value) {
                         if (value != null &&
                             value.isNotEmpty &&
@@ -85,30 +86,27 @@ class LoginPage extends StatelessWidget {
                         }
                         return null;
                       },
+                      controller: userNameController,
                     ),
                     verticalSpace(8),
                     LoginTextField(
                       obscureText: true,
                       controller: passwordController,
-                      hintText: "Enter your password",
+                      hintText: 'Enter your password',
                     ),
                   ],
                 ),
               ),
               verticalSpace(8),
               ElevatedButton(
-                onPressed: () {
-                  loginUser(context);
-                },
-                style: elevatedButtonStyle,
-                child: const Text(
-                  "Login",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-              ),
+                  onPressed: () async {
+                    await loginUser(context);
+                  },
+                  style: elevatedButtonStyle,
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
+                  )),
               const Center(child: Text("Find us on:")),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
