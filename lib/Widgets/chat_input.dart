@@ -1,4 +1,5 @@
 import 'package:chatting_app/Models/chat_msg_entities.dart';
+import 'package:chatting_app/Widgets/picker_body.dart';
 import 'package:flutter/material.dart';
 
 class ChatInput extends StatelessWidget {
@@ -9,9 +10,6 @@ class ChatInput extends StatelessWidget {
   final chatMessageController = TextEditingController();
 
   void onSendButtonPressed() {
-    print('ChatMessage: ${chatMessageController.text}');
-    //TODO: Add this new message to the default list
-
     final newChatMessage = ChatMessageEntity(
       text: chatMessageController.text,
       id: "244",
@@ -33,7 +31,13 @@ class ChatInput extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showModalBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return NetworkImagePickerBody();
+                  });
+            },
             icon: const Icon(
               Icons.add,
               color: Colors.white,

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:chatting_app/Models/chat_msg_entities.dart';
 import 'package:chatting_app/Widgets/chat_bubble.dart';
 import 'package:chatting_app/Widgets/chat_input.dart';
@@ -25,8 +24,6 @@ class _ChatPageState extends State<ChatPage> {
     final List<ChatMessageEntity> chatMessages = decodedList.map((listItem) {
       return ChatMessageEntity.fromJson(listItem);
     }).toList();
-
-    print(chatMessages.length);
 
     //final state of the messages
     setState(() {
@@ -58,7 +55,6 @@ class _ChatPageState extends State<ChatPage> {
           IconButton(
               onPressed: () {
                 Navigator.pushReplacementNamed(context, '/');
-                print('Icon pressed!');
               },
               icon: const Icon(Icons.logout))
         ],
@@ -70,9 +66,10 @@ class _ChatPageState extends State<ChatPage> {
                   itemCount: _messages.length,
                   itemBuilder: (context, index) {
                     return ChatBubble(
-                        alignment: _messages[index].author.userName == 'omkar'
-                            ? Alignment.centerRight
-                            : Alignment.centerLeft,
+                        alignment:
+                            _messages[index].author.userName == 'poojab26'
+                                ? Alignment.centerRight
+                                : Alignment.centerLeft,
                         entity: _messages[index]);
                   })),
           ChatInput(
